@@ -19,13 +19,13 @@ Route::get('/', function () {
 
 Auth::routes();
 
+//Private Routes
 Route::middleware('auth')
 ->namespace('Admin')
 ->name('admin.')
 ->prefix('admin')
 ->group (function() {
     Route::get('/', 'HomeController@index')->name('home');
-    Route::get('about', 'HomeController@about')->name('about');
 });
 
 //Route::get('admin', 'Admin\HomeController@index')->middleware('auth')->name('admin.home');
