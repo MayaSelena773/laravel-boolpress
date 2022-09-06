@@ -13,10 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('guests.home');
-});
-
 Auth::routes();
 
 //Private Routes
@@ -28,4 +24,7 @@ Route::middleware('auth')
     Route::get('/', 'HomeController@index')->name('home');
 });
 
-//Route::get('admin', 'Admin\HomeController@index')->middleware('auth')->name('admin.home');
+Route::get('{any?}', function () {
+    return view('guests.home');
+});
+
