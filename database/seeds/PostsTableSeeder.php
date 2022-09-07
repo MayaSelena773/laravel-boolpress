@@ -20,7 +20,6 @@ class PostsTableSeeder extends Seeder
             $new_post->content = $faker->paragraphs(rand(5, 10), true);
             $new_post->slug = Str::slug($new_post->title, '-');
             $new_post->save();
-
         }
     }
 }
