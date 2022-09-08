@@ -43,10 +43,13 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        //Validiamo i campi del form con una funzione
         $request->validate($this->getValidationRules());
 
+        //Se non ci sono errori di validazione, salvo i dati in $form_data
         $form_data = $request->all();
 
+        //Creao un nuovo post
         $new_post = new Post();
         $new_post->fill($form_data);
 
@@ -65,7 +68,7 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        $post = Post::find($id);
+        $post = Post::findOrFail($id);
 
         $data = [
             'post' => $post
@@ -83,7 +86,12 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        //
+        $post = Post::findOrFail($id);
+
+        $data = [
+            'post' => $post
+        ];
+        return view('admin.posts.edit', $data);
     }
 
     /**
@@ -95,7 +103,7 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $form_data = $request->all();
     }
 
     /**
@@ -111,7 +119,7 @@ class PostController extends Controller
 
     protected function getFreeSlugFromTitle($title) {
         //Assegnare lo slug
-        $slug_to_save = Str::slug('$title', '-');
+        $slug_to_save = Str::slug( $title, '-');
         $slug_base = $slug_to_save;
         //Verifico se questo slug esiste nel db
         $existing_slug_post = Post::where('slug', '=', $slug_to_save)->first();
