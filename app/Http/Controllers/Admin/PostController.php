@@ -104,6 +104,22 @@ class PostController extends Controller
     public function update(Request $request, $id)
     {
         $form_data = $request->all();
+
+        //Aggiornare il post da modificare con ->update()
+        $post_to_update = Post::findOrFail($id);
+
+        //Aggiungere all'array associativo dei nuovi dati lo slug
+        //Ricalcoliamo lo slug solo se è diverso dal vecchio
+        if($form_data ['title'] !== $post_to_update->title) {
+            $form_data['slug'] = $this->getFreeSlugFromTitle($form_data ['title']);
+
+        }else {
+            $form_data['slug'] = $post_to_update->slug;
+        }
+
+        $post_to_update->update($form_data);
+
+        return redirect()->route('admin.posts.show', ['post' => $post_to_update->id]);
     }
 
     /**
