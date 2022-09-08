@@ -91,6 +91,7 @@ class PostController extends Controller
         $data = [
             'post' => $post
         ];
+
         return view('admin.posts.edit', $data);
     }
 
@@ -103,6 +104,9 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
+        //Validazione dati
+        $request->validate($this->getValidationRules());
+
         $form_data = $request->all();
 
         //Aggiornare il post da modificare con ->update()
@@ -130,7 +134,10 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $post_to_delete = Post::findOrFail($id);
+        $post_to_delete->delete();
+
+        return redirect()->route('admin.posts.index');
     }
 
     protected function getFreeSlugFromTitle($title) {
