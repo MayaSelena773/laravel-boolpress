@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Auth;
 class HomeController extends Controller
 {
     public function index() {
-        $user_info = UserInfo::find();
 
         $user = Auth::user();
 
