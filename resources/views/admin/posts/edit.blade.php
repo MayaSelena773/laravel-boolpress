@@ -1,6 +1,6 @@
 @extends('layouts.dashboard')
 
-@section
+@section('content')
 
     <h1>Modifica Post</h1>
 
