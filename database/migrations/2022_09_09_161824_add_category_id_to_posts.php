@@ -15,10 +15,10 @@ class AddCategoryIdToPosts extends Migration
     {
         Schema::table('posts', function (Blueprint $table) {
             //Aggiungo la tabella category_id 
-            $table->unsignedBigInteger('category_id')->nullable();
+            $table->unsignedBigInteger('category_id')->nullable()->after('slug');
 
             //Aggiungo la relazione
-            $table->foreign('category_id')->references('id')->on('categories');
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('set null');
         });
     }
 

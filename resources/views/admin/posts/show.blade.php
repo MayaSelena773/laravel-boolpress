@@ -7,6 +7,7 @@
 <p><strong>Creato il:</strong> {{ $post->created_at->format('j F Y') }}</p>
 <p><strong>Aggiornato il:</strong> {{ $post->updated_at->format('j F Y') }}</p>
 <p><strong>Slug:</strong> {{ $post->slug }}</p>
+<p><strong>Categoria:</strong>{{ $post->category ? $post->category_name : ' nessuna' }}</p>
 
 <h3 class="mt-4">Contenuto:</h3>
 <p>{{ $post->content}}</p>
