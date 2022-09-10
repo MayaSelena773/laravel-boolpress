@@ -40,7 +40,7 @@ class PostController extends Controller
             'categories' => $categories
         ];
 
-        return view('admin.posts.create',$data); 
+        return view('admin.posts.create', $data); 
     }
 
     /**
@@ -95,9 +95,11 @@ class PostController extends Controller
     public function edit($id)
     {
         $post = Post::findOrFail($id);
+        $categories = Category::all();
 
         $data = [
-            'post' => $post
+            'post' => $post,
+            'categories' => $categories
         ];
 
         return view('admin.posts.edit', $data);
