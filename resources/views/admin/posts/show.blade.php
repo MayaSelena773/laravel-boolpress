@@ -8,6 +8,15 @@
 <p><strong>Aggiornato il:</strong> {{ $post->updated_at->format('j F Y') }}</p>
 <p><strong>Slug:</strong> {{ $post->slug }}</p>
 <p><strong>Categoria:</strong>{{ $post->category ? $post->category_name : ' nessuna' }}</p>
+<div>
+    <p><strong>Tags:</strong></p>
+
+    @forelse ($post->tags as $tag)
+        {{ $tag->name }}{{ !$loop->last ? ',' : ''}}
+    @empty
+        nessuno
+    @endforelse
+</div>
 
 <h3 class="mt-4">Contenuto:</h3>
 <p>{{ $post->content}}</p>
