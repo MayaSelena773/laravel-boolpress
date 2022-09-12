@@ -37,6 +37,8 @@
         <h5>Tags:</h5>
 
         @foreach ($tags as $tag)
+        @if ($errors->any())
+        {{--Se ci sono errori di validazione valuto la old, per lasciare il checked selezionato --}}
         <div class="form-check">
 
             <input class="form-check-input" 
@@ -44,12 +46,30 @@
             value="{{ $tag->id }}" 
             id="tag-{{ $tag->id }}" 
             name="tags[]"
-            {{ $post->tag->contains($tag) ? 'checked' : '' }}>
+            {{ in_array($tag->id, old('tags', [])) ? 'checked' : '' }}>
 
             <label class="form-check-label" for="tag-{{ $tag->id }}">
                 {{$tag->name}}
             </label>
         </div>
+            
+        @else
+        {{--Altrimenti carico la collection dei tag --}}
+        <div class="form-check">
+
+            <input class="form-check-input" 
+            type="checkbox" 
+            value="{{ $tag->id }}" 
+            id="tag-{{ $tag->id }}" 
+            name="tags[]"
+            {{ $post->tags->contains($tag) ? 'checked' : '' }}>
+
+            <label class="form-check-label" for="tag-{{ $tag->id }}">
+                {{$tag->name}}
+            </label>
+        </div>
+            
+        @endif
         @endforeach
     </div>
 
