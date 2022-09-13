@@ -6,12 +6,12 @@
 
         <div class="row row-cols-3">
             <!--Single post-->
-            <div class="col">
-                <div class="card mt-5">
+            <div v-for="post in posts" :key="post.id" class="col">
+                <div class="card mt-4">
                     <!--<img src="..." class="card-img-top" alt="...">-->
                     <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <h5 class="card-title">{{ post.title }}</h5>
+                        <p class="card-text">{{ post.content }}</p>
                         <a href="#" class="btn btn-primary">Go somewhere</a>
                     </div>
                 </div>
@@ -24,6 +24,29 @@
 
 <script>
 export default {
-    name : 'Posts'
+    name : 'Posts',
+    data() {
+        return {
+            posts: []
+        };
+    },
+    methods: {
+        truncateText(text) {
+            if (text.length > 75) {
+                return text.slice(0, 75) + '...';
+            }
+
+            return text;
+        },
+        getPosts() {
+            axios.get('/api/posts')
+            .then((response) => {
+                this.posts = response.data.results;
+            });
+        }
+    },
+    mounted() {
+        this.getPosts();
+    }
 }
 </script>
