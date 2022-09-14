@@ -2,7 +2,7 @@
 
 <section>
     <div class="container">
-        <h1> Lista dei post </h1>
+        <h2> {{ title }} </h2>
 
         <div class="row row-cols-3">
             <!--Single post-->
@@ -19,21 +19,40 @@
         </div>
 
         <div class="mt-5">
-            <!--Nav bar scrolling pages-->
+            <!--Scrolling pages bar-->
             <nav aria-label="Page navigation example">
                 <ul class="pagination">
                     <!--Previous-->
-                    <li class="page-item">
-                        <a @click.prevent="getPosts(paginationCurrentPage - 1)" class="page-link" href="#">Previous</a>
+                    <li class="page-item" :class="{'disabled': paginationCurrentPage == 1}">
+
+                        <a @click.prevent="getPosts(paginationCurrentPage - 1)" 
+                        class="page-link" 
+                        href="#">Previous
+                        </a>
+                        
                     </li>
 
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <!--Pagination numbers-->
+                    <li v-for="pageNumber in paginationLastPage" 
+                    :key="pageNumber" class="page-item" 
+                    :class="{'active': pageNumber == paginationCurrentPage}">
+
+                        <a @click.prevent="getPosts(pageNumber)" 
+                        class="page-link" 
+                        href="#">{{pageNumber}}
+                        </a>
+
+                    </li>
 
                     <!--Next-->
-                    <li class="page-item">
-                        <a @click.prevent="getPosts(paginationCurrentPage + 1)" class="page-link" href="#">Next</a>
+                    <li class="page-item" 
+                    :class="{'disabled': paginationCurrentPage == paginationLastPage}">
+
+                        <a @click.prevent="getPosts(paginationCurrentPage + 1)" 
+                        class="page-link" 
+                        href="#">Next
+                        </a>
+
                     </li>
                 </ul>
             </nav>
@@ -48,8 +67,10 @@ export default {
     name : 'Posts',
     data() {
         return {
+            title: 'I nostri Post',
             posts: [],
-            paginationCurrentPage: 1
+            paginationCurrentPage: 1,
+            paginationLastPage: null
         };
     },
     methods: {
@@ -66,6 +87,7 @@ export default {
             .then((response) => {
                 this.posts = response.data.results.data;
                 this.paginationCurrentPage = response.data.results.current_page;
+                this.paginationLastPage = response.data.results.last_page;
             });
         }
     },
