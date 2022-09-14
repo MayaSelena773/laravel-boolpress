@@ -1917,17 +1917,13 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     truncateText: function truncateText(text) {
-      if (text.length > 75) {
-        return text.slice(0, 75) + '...';
-      }
-
-      return text;
+      return text.length > 100 ? text.slice(0, 100) + '...' : text;
     },
     getPosts: function getPosts() {
       var _this = this;
 
       axios.get('/api/posts').then(function (response) {
-        _this.posts = response.data.results;
+        _this.posts = response.data.results.data;
       });
     }
   },
@@ -1989,7 +1985,7 @@ var render = function render() {
       staticClass: "card-title"
     }, [_vm._v(_vm._s(post.title))]), _vm._v(" "), _c("p", {
       staticClass: "card-text"
-    }, [_vm._v(_vm._s(post.content))]), _vm._v(" "), _c("a", {
+    }, [_vm._v(_vm._s(_vm.truncateText(post.content)))]), _vm._v(" "), _c("a", {
       staticClass: "btn btn-primary",
       attrs: {
         href: "#"

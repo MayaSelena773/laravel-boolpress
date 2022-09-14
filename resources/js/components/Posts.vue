@@ -11,7 +11,7 @@
                     <!--<img src="..." class="card-img-top" alt="...">-->
                     <div class="card-body">
                         <h5 class="card-title">{{ post.title }}</h5>
-                        <p class="card-text">{{ post.content }}</p>
+                        <p class="card-text">{{ truncateText(post.content) }}</p>
                         <a href="#" class="btn btn-primary">Go somewhere</a>
                     </div>
                 </div>
@@ -32,16 +32,13 @@ export default {
     },
     methods: {
         truncateText(text) {
-            if (text.length > 75) {
-                return text.slice(0, 75) + '...';
-            }
-
-            return text;
+  
+            return text.length > 100 ? text.slice(0, 100) + '...' : text;
         },
         getPosts() {
             axios.get('/api/posts')
             .then((response) => {
-                this.posts = response.data.results;
+                this.posts = response.data.results.data;
             });
         }
     },
