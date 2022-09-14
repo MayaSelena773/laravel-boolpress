@@ -17,6 +17,27 @@
                 </div>
             </div>
         </div>
+
+        <div class="mt-5">
+            <!--Nav bar scrolling pages-->
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    <!--Previous-->
+                    <li class="page-item">
+                        <a @click.prevent="getPosts(paginationCurrentPage - 1)" class="page-link" href="#">Previous</a>
+                    </li>
+
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+
+                    <!--Next-->
+                    <li class="page-item">
+                        <a @click.prevent="getPosts(paginationCurrentPage + 1)" class="page-link" href="#">Next</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
     </div>
 </section>
 
@@ -27,7 +48,8 @@ export default {
     name : 'Posts',
     data() {
         return {
-            posts: []
+            posts: [],
+            paginationCurrentPage: 1
         };
     },
     methods: {
@@ -35,15 +57,20 @@ export default {
   
             return text.length > 100 ? text.slice(0, 100) + '...' : text;
         },
-        getPosts() {
-            axios.get('/api/posts')
+        getPosts(pageNumber) {
+            axios.get('/api/posts', {
+                params: {
+                    page: pageNumber
+                }
+            })
             .then((response) => {
                 this.posts = response.data.results.data;
+                this.paginationCurrentPage = response.data.results.current_page;
             });
         }
     },
     mounted() {
-        this.getPosts();
+        this.getPosts(1);
     }
 }
 </script>
