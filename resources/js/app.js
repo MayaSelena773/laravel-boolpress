@@ -28,10 +28,12 @@ window.Vue = require('vue');
  */
 
 import App from './views/app.vue';
+import router from './router.js';
 
 const app = new Vue({
     el: '#root',
-    render: h => h(App)
+    render: h => h(App),
+    router
 });
 
 window.axios = require('axios');

@@ -1,5 +1,7 @@
 <template>
-    <h1>Ciao sono la AboutPage</h1>
+    <div class="container">
+        <h1>Ciao sono la AboutPage</h1>
+    </div>
 </template>
 
 <script>
