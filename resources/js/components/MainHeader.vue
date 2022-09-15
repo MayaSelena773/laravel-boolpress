@@ -7,11 +7,9 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
-
-                        <li :v-for="link, index in menuLinks" :key="index" class="nav-item">
+                        <li v-for="(link, index) in menuLinks" :key="index" class="nav-item">
                             <router-link :to="{name: link.name}" class="nav-link">{{ link.label }}</router-link>
                         </li>
-
                     </ul>
                 </div>
             </div>
