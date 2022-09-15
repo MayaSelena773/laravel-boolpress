@@ -2052,7 +2052,19 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'SinglePost'
+  name: 'SinglePost',
+  data: function data() {
+    return {
+      post: null
+    };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    axios.get('/api/posts/' + this.$route.params.slug).then(function (response) {
+      _this.post = response.data.results;
+    });
+  }
 });
 
 /***/ }),
@@ -2172,12 +2184,17 @@ var render = function render() {
       staticClass: "card-title"
     }, [_vm._v(_vm._s(post.title))]), _vm._v(" "), _c("p", {
       staticClass: "card-text"
-    }, [_vm._v(_vm._s(_vm.truncateText(post.content)))]), _vm._v(" "), _c("a", {
+    }, [_vm._v(_vm._s(_vm.truncateText(post.content)))]), _vm._v(" "), _c("router-link", {
       staticClass: "btn btn-primary",
       attrs: {
-        href: "#"
+        to: {
+          name: "single-post",
+          params: {
+            slug: post.slug
+          }
+        }
       }
-    }, [_vm._v("Go somewhere")])])])]);
+    }, [_vm._v("\n                        Visualizza\n                        ")])], 1)])]);
   }), 0), _vm._v(" "), _c("div", {
     staticClass: "mt-5"
   }, [_c("nav", {
@@ -2376,17 +2393,17 @@ var render = function render() {
   var _vm = this,
       _c = _vm._self._c;
 
-  return _vm._m(0);
-};
-
-var staticRenderFns = [function () {
-  var _vm = this,
-      _c = _vm._self._c;
-
   return _c("div", {
     staticClass: "container"
-  }, [_c("h1", [_vm._v("Dettaglio post")])]);
-}];
+  }, [_vm.post ? _c("div", [_c("h1", [_vm._v(_vm._s(_vm.post.title))]), _vm._v(" "), _vm.post.tags.legth > 0 ? _c("div", _vm._l(_vm.post.tags, function (tag) {
+    return _c("span", {
+      key: tag.id,
+      staticClass: "badge bg-info text-light"
+    }, [_vm._v(_vm._s(tag.name))]);
+  }), 0) : _vm._e(), _vm._v(" "), _vm.post.category ? _c("p", [_vm._v("Categoria: " + _vm._s(_vm.post.category.name))]) : _vm._e(), _vm._v(" "), _c("p", [_vm._v(_vm._s(_vm.post.content))])]) : _vm._e()]);
+};
+
+var staticRenderFns = [];
 render._withStripped = true;
 
 

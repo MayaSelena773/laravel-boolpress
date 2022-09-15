@@ -11,8 +11,14 @@
                     <!--<img src="..." class="card-img-top" alt="...">-->
                     <div class="card-body">
                         <h5 class="card-title">{{ post.title }}</h5>
+                        
                         <p class="card-text">{{ truncateText(post.content) }}</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
+
+                        <router-link 
+                        class="btn btn-primary" 
+                        :to="{name: 'single-post', params: {slug: post.slug} }">
+                        Visualizza
+                        </router-link>
                     </div>
                 </div>
             </div>
